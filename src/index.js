@@ -1,26 +1,27 @@
-// const kharachaevsk = new URL('./images/card_1.jpg', import.meta.url);
-// const elbrys = new URL('./images/card_2.jpg', import.meta.url);
-// const dombai = new URL('./images/card_3.jpg', import.meta.url)
+import "./pages/index.css";
+import { initialCards } from "./components/cards.js";
+import { createCard, removeCard, createNewCard } from "./components/card.js";
+import { OpenModal, CloseModal, CloseEsc } from "./components/modal.js";
 
-// const whoIsTheGoat = [
-//   { name: 'kharachaevsk', link: kharachaevskImage },
-//   { name: 'elbrys', link: elbrysImage },
-//   { name: 'dombai', link: dombaiImage },
-// ];
+const placesList = document.querySelector(".places__list");
 
-import './pages/index.css'
-import { initialCards } from './components/cards.js';
-import { createCard, removeCard } from './components/card.js';
-import { OpenModal } from './components/modal.js';
-import { CloseModal } from './components/modal.js';
-import { CloseEsc } from './components/modal.js';
+const popupTypeImage = document.querySelector(".popup_type_image");
+const popupImg = document.querySelector(".popup__image");
+const popupCaption = document.querySelector(".popup__caption");
 
+// функция открытия модального окна
+function showImg(card) {
+  popupImg.src = card.link;
+  popupImg.alt = card.name;
+  popupCaption.textContent = card.name;
 
-
-function renderCard(card) {
-  const cardElement = createCard(card, removeCard);
-  document.querySelector(".places__list").append(cardElement);
+  console.log(popupImg);
+  OpenModal(popupTypeImage);
 }
 
+function renderCard(card) {
+  const cardElement = createCard(card, removeCard, showImg(card), CloseModal);
+  placesList.append(cardElement);
+}
 
-initialCards.forEach(card => renderCard(card))
+initialCards.forEach((card) => renderCard(card));
