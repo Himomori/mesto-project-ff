@@ -1,7 +1,5 @@
-import { CloseModal } from "./modal";
 const openPop = document.querySelector(".popup_is-opened");
-
-export function createCard(cardData, removeCard) {
+export function createCard(cardData, removeCard, showImg) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   cardElement.querySelector(".card__image").src = cardData.link;
@@ -16,8 +14,7 @@ export function createCard(cardData, removeCard) {
   });
 
   const cardImage = cardElement.querySelector(".card__image");
-  cardImage.addEventListener("click", () => showImg);
-  // cardImage.addEventListener("click", showImg);
+  cardImage.addEventListener("click", () => showImg(cardData));
 
   return cardElement;
 }
