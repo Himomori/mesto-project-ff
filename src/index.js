@@ -1,11 +1,7 @@
 import "./pages/index.css";
 import { initialCards } from "./components/cards.js";
-import {
-  createCard,
-  removeCard,
-  createNewCard,
-} from "./components/card.js";
-import { OpenModal, CloseModal, CloseEsc } from "./components/modal.js";
+import { createCard, removeCard, newCard} from "./components/card.js";
+import { OpenModal, CloseModal} from "./components/modal.js";
 
 const placesList = document.querySelector(".places__list");
 
@@ -23,7 +19,7 @@ function showImg(cardData) {
 }
 
 function renderCard(card) {
-  const cardElement = createCard(card, removeCard, showImg, CloseModal);
+  const cardElement = createCard(card, removeCard, newCard, showImg, CloseModal);
   placesList.append(cardElement);
 }
 

@@ -1,3 +1,4 @@
+import { CloseModal } from "./modal";
 const openPop = document.querySelector(".popup_is-opened");
 export function createCard(cardData, removeCard, showImg) {
   const cardTemplate = document.querySelector("#card-template").content;
@@ -23,27 +24,26 @@ export function removeCard(card) {
   card.target.closest(".card").remove();
 }
 
-export function newCard(data) {
+export function newCard(cardUrl, cardName) {
   const cardTemplate = document.querySelector("#card-template").content;
   const newCard = cardTemplate.querySelector(".card").cloneNode(true);
-  newCard.querySelector(".card__image").src = data.link;
-  newCard.querySelector(".card__image").alt = data.name;
-  newCard.querySelector(".card__title").textContent = data.name;
+  newCard.querySelector(".card__image").src = cardName.value;
+  newCard.querySelector(".card__title").textContent = cardUrl.value;
 
   return newCard;
 }
 
 const cardformElement = document.querySelector('[name="new-place"]');
-const cardNameInput = document.querySelector(".popup__input_type_card-name");
-const cardUrlInput = document.querySelector(".popup__input_type_url");
+const cardName = document.querySelector(".popup__input_type_card-name");
+const cardUrl = document.querySelector(".popup__input_type_url");
+
 
 cardformElement.addEventListener("submit", function (evt) {
   evt.preventDefault();
-
-  const card = newCard(cardNameInput.value, cardUrlInput.value);
-
-  cardNameInput.value = "";
-  cardUrlInput.value = "";
+  const card = newCard(cardName, cardUrl);
+  
+  cardName.value;
+  cardUrl.value;
 
   document.querySelector(".places__list").prepend(card);
 
