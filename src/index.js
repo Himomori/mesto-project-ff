@@ -19,7 +19,7 @@ function showImg(cardData) {
 }
 
 function renderCard(card) {
-  const cardElement = createCard(card, removeCard, newCard, showImg, CloseModal);
+  const cardElement = createCard(card, removeCard, showImg, CloseModal);
   placesList.append(cardElement);
 }
 

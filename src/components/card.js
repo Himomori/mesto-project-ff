@@ -24,14 +24,6 @@ export function removeCard(card) {
   card.target.closest(".card").remove();
 }
 
-export function newCard(cardUrl, cardName) {
-  const cardTemplate = document.querySelector("#card-template").content;
-  const newCard = cardTemplate.querySelector(".card").cloneNode(true);
-  newCard.querySelector(".card__image").src = cardName.value;
-  newCard.querySelector(".card__title").textContent = cardUrl.value;
-
-  return newCard;
-}
 
 const cardformElement = document.querySelector('[name="new-place"]');
 const cardName = document.querySelector(".popup__input_type_card-name");
@@ -40,10 +32,13 @@ const cardUrl = document.querySelector(".popup__input_type_url");
 
 cardformElement.addEventListener("submit", function (evt) {
   evt.preventDefault();
-  const card = newCard(cardName, cardUrl);
   
-  cardName.value;
-  cardUrl.value;
+  const data = {
+    name: cardName.value,
+    link: cardUrl.value
+  };
+
+  const card = createCard(data, removeCard);
 
   document.querySelector(".places__list").prepend(card);
 
