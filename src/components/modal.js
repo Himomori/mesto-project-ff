@@ -32,14 +32,14 @@ popupClose.forEach(function (evt) {
   });
 });
 
-// функция закрытия модального окна кликом на оверлей(закрывается от любого клика по попапу даже по форме. переделать)
-// popups.forEach(function () {
-//   popup.addEventListener('click', function(evt) {
-//     if (evt.currentTarget === evt.targert) {
-//       CloseModal(popup);
-//     }
-//     })
-// });
+// функция закрытия модального окна кликом на оверлей
+popups.forEach(function (popup) {
+  popup.addEventListener("click", function (evt) {
+    if (evt.currentTarget === evt.target) {
+      CloseModal(popup);
+    }
+  });
+});
 
 // закрытие любого модального через ескейп
 document.addEventListener("keydown", function (evt) {
@@ -48,11 +48,11 @@ document.addEventListener("keydown", function (evt) {
   }
 });
 
-// форма редактирования профиля
 const formElement = document.querySelector('[name="edit-profile"]');
 const nameInput = document.querySelector(".popup__input_type_name");
 const jobInput = document.querySelector(".popup__input_type_description");
 
+// форма редактирования профиля
 function handleFormSubmit(evt) {
   evt.preventDefault();
   const name = nameInput.value;
