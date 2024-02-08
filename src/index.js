@@ -1,6 +1,6 @@
 import "./pages/index.css";
 import { initialCards } from "./components/cards.js";
-import { createCard, removeCard } from "./components/card.js";
+import { createCard, cardLike, removeCard } from "./components/card.js";
 import {
   closeModal,
   openModal,
@@ -25,7 +25,7 @@ profileEditButton.addEventListener("click", function () {
 // событие открытия формы добавления карточки
 profileAddButton.addEventListener("click", function () {
   openModal(popupTypeNewCard);
-}); 
+});
 // функция открытия модального окна картинки карточки
 export function openImagePopup(cardData) {
   popupImg.src = cardData.link;
@@ -35,20 +35,20 @@ export function openImagePopup(cardData) {
   openModal(popupTypeImage);
 }
 
-// popups.forEach(function (elem) {
-//   elem.addEventListener("click", function () {
-//     setCloseModalWindowEventListeners(elem);
-//   });
-// });
-
 popups.forEach(function (popup) {
-  popup.addEventListener('click', function() {
+  popup.addEventListener("click", function () {
     closeModal(popup);
-  })
+  });
 });
 
 function renderCard(card) {
-  const cardElement = createCard(card, removeCard, openImagePopup, closeModal);
+  const cardElement = createCard(
+    card,
+    removeCard,
+    openImagePopup,
+    cardLike,
+    closeModal
+  );
   cardsContainer.append(cardElement);
 }
 
