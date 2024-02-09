@@ -4,7 +4,6 @@ import { createCard, cardLike, removeCard } from "./components/card.js";
 import {
   openModal,
   closeModal,
-  handleCloseByEsc,
   setCloseModalWindowEventListeners,
 } from "./components/modal.js";
 const popups = document.querySelectorAll(".popup");

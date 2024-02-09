@@ -6,7 +6,6 @@ export function openModal(popup) {
 // функция закрытия попапа
 export function closeModal(popup) {
   popup.classList.remove("popup_is-opened");
-  console.log(popup);
 }
 
 // функция закрытия попапа по клику на esc
