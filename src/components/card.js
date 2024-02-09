@@ -1,9 +1,4 @@
 const cardTemplate = document.querySelector("#card-template").content;
-const openPop = document.querySelector(".popup_is-opened");
-const cardsContainer = document.querySelector(".places__list");
-const popupNewCard = document.querySelector(".popup_type_new-card");
-const cardImage = document.querySelector(".card__image");
-const cardTitle = document.querySelector(".card__title");
 
 export function createCard(cardData, removeCard, openImagePopup, cardLike) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);

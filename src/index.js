@@ -10,7 +10,6 @@ import {
 const popups = document.querySelectorAll(".popup");
 const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
-const popupsClose = document.querySelectorAll(".popup__close");
 const popupTypeNewCard = document.querySelector(".popup_type_new-card");
 const popupTypeEdit = document.querySelector(".popup_type_edit");
 const cardsContainer = document.querySelector(".places__list");
@@ -36,11 +35,10 @@ export function openImagePopup(cardData) {
 
   openModal(popupTypeImage);
 }
-
+// перебор циклом закрытия попапов по кнопке и оверлею
 popups.forEach(function (popup) {
   popup.addEventListener("click", function (evt) {
     setCloseModalWindowEventListeners(evt);
-    console.log(popup);
   });
 });
 
