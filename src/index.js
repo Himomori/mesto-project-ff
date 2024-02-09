@@ -2,15 +2,15 @@ import "./pages/index.css";
 import { initialCards } from "./components/cards.js";
 import { createCard, cardLike, removeCard } from "./components/card.js";
 import {
-  closeModal,
   openModal,
-  setCloseModalWindowEventListeners,
+  closeModal,
   handleCloseByEsc,
+  setCloseModalWindowEventListeners,
 } from "./components/modal.js";
 const popups = document.querySelectorAll(".popup");
 const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
-// const popupsClose = document.querySelectorAll(".popup__close");
+const popupsClose = document.querySelectorAll(".popup__close");
 const popupTypeNewCard = document.querySelector(".popup_type_new-card");
 const popupTypeEdit = document.querySelector(".popup_type_edit");
 const cardsContainer = document.querySelector(".places__list");
@@ -20,6 +20,8 @@ const popupCaption = document.querySelector(".popup__caption");
 
 // событие открытия редактирования профиля
 profileEditButton.addEventListener("click", function () {
+  nameInput.value = "Жак-Ив Кусто";
+  jobInput.value = "Исследователь океана";
   openModal(popupTypeEdit);
 });
 // событие открытия формы добавления карточки
@@ -36,8 +38,9 @@ export function openImagePopup(cardData) {
 }
 
 popups.forEach(function (popup) {
-  popup.addEventListener("click", function () {
-    closeModal(popup);
+  popup.addEventListener("click", function (evt) {
+    setCloseModalWindowEventListeners(evt);
+    console.log(popup);
   });
 });
 
@@ -69,7 +72,7 @@ function submitEditForm(evt) {
   profileTitle.textContent = name;
   profileDescription.textContent = job;
 
-  closeModal();
+  closeModal(popupTypeEdit);
 }
 
 formEditProfile.addEventListener("submit", submitEditForm);
@@ -87,7 +90,7 @@ export function submitAddCard(evt) {
     link: cardUrl.value,
   };
 
-  const card = createCard(data, removeCard, openImagePopup);
+  const card = createCard(data, removeCard, openImagePopup, cardLike);
 
   cardsContainer.prepend(card);
 
