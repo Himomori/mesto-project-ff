@@ -6,6 +6,7 @@ export function openModal(popup) {
 // функция закрытия попапа
 export function closeModal(popup) {
   popup.classList.remove("popup_is-opened");
+  document.removeEventListener("keydown", handleCloseByEsc);
 }
 
 // функция закрытия попапа по клику на esc
@@ -17,7 +18,7 @@ export function handleCloseByEsc(evt) {
 }
 
 // функция закрытия попапа по клику на оверлей и крестик
-export function setCloseModalWindowEventListeners(modal) {
+export function handleCloseModalByClick(modal) {
   if (
     modal.currentTarget === modal.target ||
     modal.target.classList.contains("popup__close")
@@ -25,5 +26,4 @@ export function setCloseModalWindowEventListeners(modal) {
     const openPop = document.querySelector(".popup_is-opened");
     closeModal(openPop);
   }
-  document.removeEventListener("keydown", handleCloseByEsc);
 }
