@@ -6,6 +6,8 @@ import {
   closeModal,
   handleCloseModalByClick,
 } from "./components/modal.js";
+import { showInputError, hideInputError  } from "./components/validation.js";
+
 const popups = document.querySelectorAll(".popup");
 const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
