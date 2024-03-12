@@ -5,6 +5,7 @@ export function createCard(cardData, removeCard, openImagePopup, likeCard) {
   cardElement.querySelector(".card__image").src = cardData.link;
   cardElement.querySelector(".card__image").alt = cardData.name;
   cardElement.querySelector(".card__title").textContent = cardData.name;
+  cardElement.querySelector('.like__counter').textContent = cardData.likes.length;
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", removeCard);

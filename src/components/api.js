@@ -43,5 +43,4 @@ export function createNewCard(name, link) {
   })
   })
   .then(res => res.json())
-  .then(data => console.log(data));
 }

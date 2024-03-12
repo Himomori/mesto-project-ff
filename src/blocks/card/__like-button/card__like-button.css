@@ -18,3 +18,7 @@
 .card__like-button:hover {
   opacity: 0.6;
 }
+
+.like__counter {
+  margin-block-start: 20px;
+}

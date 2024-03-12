@@ -68,24 +68,31 @@ function handleProfileFormSubmit(evt) {
 formEditProfile.addEventListener("submit", handleProfileFormSubmit);
 
 // форма добавления новых карточек
-export function handleCardFormSubmit(evt) {
+export function handleNewCardFormSubmit(evt) {
   evt.preventDefault();
 
-  const data = {
-    name: cardName.value,
-    link: cardUrl.value,
-  };
+  const name = cardName.value;
+  const link = cardUrl.value;
 
-  const card = createCard(data, removeCard, openImagePopup, likeCard);
+  const newCard = {
+    name: name,
+    alt: name,
+    link: link,
+    likes: [],
+  }
 
-  cardsContainer.prepend(card);
+  const newCardElement = createCard(newCard, removeCard, openImagePopup, likeCard);
+  cardsContainer.prepend(newCardElement);
+  createNewCard(name, link)
 
+  nameInput.value = '';
+  cardUrl.value = '';
   closeModal(popupTypeNewCard);
 
   formNewPlace.reset();
 }
 
-formNewPlace.addEventListener("submit", handleCardFormSubmit);
+formNewPlace.addEventListener("submit", handleNewCardFormSubmit);
 
 // событие открытия редактирования профиля
 profileEditButton.addEventListener("click", function () {
