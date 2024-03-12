@@ -19,6 +19,11 @@ export function hideInputError(formElement, inputElement) {
 
 // Функция, которая проверяет валидность поля
 export function checkInputValidity(formElement, inputElement) {
+  if (inputElement.validity.patternMismatch) {
+    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+  } else {
+    inputElement.setCustomValidity("");
+  }
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
@@ -51,7 +56,14 @@ export function enableValidation() {
 
 }
 
-enableValidation();
+enableValidation({
+  formElement: '.popup__form',
+  inputElement: '.popup__input',
+  buttonElement: '.popup__button',
+  inactiveButtonClass: 'popup__button-inactive',
+  inputErrorClass: 'popup__input-error',
+  errorClass: '`.${inputElement.id}-error`'
+});
 
 // Функция, которая проверяет валидность поля
 export function hasInvalidInput(inputList) {
@@ -71,3 +83,22 @@ export function toggleButtonState(inputList, buttonElement) {
     buttonElement.classList.remove('popup__button-inactive');
   }
 };
+
+// пока не поняла
+// function buttonState(formElement) {
+//   const inputList = Array.from(
+//     formElement.querySelectorAll(enableValidation.inputSelector)
+//   );
+//   const buttonElement = formElement.querySelector(enableValidation.submitButtonSelector);
+//   toggleButtonState(inputList, buttonElement);
+//   inputList.forEach((inputElement) => {
+//     inputElement.addEventListener("input", function () {
+//       checkInputValidity(formElement, inputElement);
+//       toggleButtonState(inputList, buttonElement);
+//     });
+//   });
+// }
+
+export function clearValidation() {
+  
+}

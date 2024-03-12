@@ -1,12 +1,12 @@
 import "./pages/index.css";
-import { initialCards } from "./components/cards.js";
 import { createCard, likeCard, removeCard } from "./components/card.js";
 import {
   openModal,
   closeModal,
   handleCloseModalByClick,
 } from "./components/modal.js";
-import { showInputError, hideInputError  } from "./components/validation.js";
+import { setEventListeners  } from "./components/validation.js";
+import { getUserData, getCardsData, createNewCard } from "./components/api.js";
 
 const popups = document.querySelectorAll(".popup");
 const profileAddButton = document.querySelector(".profile__add-button");
@@ -22,6 +22,7 @@ const nameInput = document.querySelector(".popup__input_type_name");
 const jobInput = document.querySelector(".popup__input_type_description");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
+const profileImage = document.querySelector('.profile__image');
 const formNewPlace = document.querySelector('[name="new-place"]');
 const cardName = document.querySelector(".popup__input_type_card-name");
 const cardUrl = document.querySelector(".popup__input_type_url");
@@ -31,7 +32,7 @@ export function openImagePopup(cardData) {
   popupImg.src = cardData.link;
   popupImg.alt = cardData.name;
   popupCaption.textContent = cardData.name;
-
+  // console.log(cardData.link);
   openModal(popupTypeImage);
 }
 // перебор циклом закрытия попапов по кнопке и оверлею
@@ -41,12 +42,16 @@ popups.forEach(function (popup) {
   });
 });
 
-function renderCard(card) {
-  const cardElement = createCard(card, removeCard, openImagePopup, likeCard);
-  cardsContainer.append(cardElement);
-}
-
-initialCards.forEach((card) => renderCard(card));
+// загрузка информации о пользователе и карточек с сервера и их вывод
+Promise.all([getUserData, getCardsData])
+.then(([userData, cardsData]) => {
+  profileTitle.textContent = userData.name;
+  profileDescription.textContent = userData.about;
+  profileImage.style.backgroundImage = `url(${userData.avatar})`;
+  cardsData.forEach((item) => {
+    cardsContainer.append(createCard(item, removeCard, openImagePopup, likeCard));
+  });
+})
 
 // форма редактирования профиля
 function handleProfileFormSubmit(evt) {
@@ -92,3 +97,4 @@ profileEditButton.addEventListener("click", function () {
 profileAddButton.addEventListener("click", function () {
   openModal(popupTypeNewCard);
 });
+
