@@ -45,13 +45,15 @@ popups.forEach(function (popup) {
 // загрузка информации о пользователе и карточек с сервера и их вывод
 Promise.all([getUserData, getCardsData])
 .then(([userData, cardsData]) => {
+  let userId = userData._id;
   profileTitle.textContent = userData.name;
   profileDescription.textContent = userData.about;
   profileImage.style.backgroundImage = `url(${userData.avatar})`;
   cardsData.forEach((item) => {
-    cardsContainer.append(createCard(item, removeCard, openImagePopup, likeCard));
+    cardsContainer.append(createCard(item, removeCard, openImagePopup, likeCard, userId));
   });
 })
+
 
 // форма редактирования профиля
 function handleProfileFormSubmit(evt) {
