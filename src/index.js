@@ -5,8 +5,15 @@ import {
   closeModal,
   handleCloseModalByClick,
 } from "./components/modal.js";
-import { setEventListeners  } from "./components/validation.js";
-import { getUserData, getCardsData, createNewCard } from "./components/api.js";
+import { enableValidation } from "./components/validation.js";
+import {
+  getUserData,
+  getCardsData,
+  createNewCard,
+  likeAdd,
+  likeRemove,
+  editAvatar,
+} from "./components/api.js";
 
 const popups = document.querySelectorAll(".popup");
 const profileAddButton = document.querySelector(".profile__add-button");
@@ -22,17 +29,17 @@ const nameInput = document.querySelector(".popup__input_type_name");
 const jobInput = document.querySelector(".popup__input_type_description");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
-const profileImage = document.querySelector('.profile__image');
+const profileImage = document.querySelector(".profile__image");
 const formNewPlace = document.querySelector('[name="new-place"]');
 const cardName = document.querySelector(".popup__input_type_card-name");
 const cardUrl = document.querySelector(".popup__input_type_url");
+const likeCounter = document.querySelector(".like__counter");
 
 // функция открытия модального окна картинки карточки
 export function openImagePopup(cardData) {
   popupImg.src = cardData.link;
   popupImg.alt = cardData.name;
   popupCaption.textContent = cardData.name;
-  // console.log(cardData.link);
   openModal(popupTypeImage);
 }
 // перебор циклом закрытия попапов по кнопке и оверлею
@@ -43,17 +50,17 @@ popups.forEach(function (popup) {
 });
 
 // загрузка информации о пользователе и карточек с сервера и их вывод
-Promise.all([getUserData, getCardsData])
-.then(([userData, cardsData]) => {
+Promise.all([getUserData, getCardsData]).then(([userData, cardsData]) => {
   let userId = userData._id;
   profileTitle.textContent = userData.name;
   profileDescription.textContent = userData.about;
   profileImage.style.backgroundImage = `url(${userData.avatar})`;
   cardsData.forEach((item) => {
-    cardsContainer.append(createCard(item, removeCard, openImagePopup, likeCard, userId));
+    cardsContainer.append(
+      createCard(item, removeCard, openImagePopup, likeCard, userId)
+    );
   });
-})
-
+});
 
 // форма редактирования профиля
 function handleProfileFormSubmit(evt) {
@@ -81,20 +88,61 @@ export function handleNewCardFormSubmit(evt) {
     alt: name,
     link: link,
     likes: [],
-  }
+  };
 
-  const newCardElement = createCard(newCard, removeCard, openImagePopup, likeCard);
+  // Добавление новой карточки
+  const newCardElement = createCard(
+    newCard,
+    removeCard,
+    openImagePopup,
+    likeCard
+  );
   cardsContainer.prepend(newCardElement);
-  createNewCard(name, link)
+  createNewCard(name, link);
 
-  nameInput.value = '';
-  cardUrl.value = '';
+  nameInput.value = "";
+  cardUrl.value = "";
   closeModal(popupTypeNewCard);
 
   formNewPlace.reset();
 }
 
 formNewPlace.addEventListener("submit", handleNewCardFormSubmit);
+
+// Функция добавления и удаления лайка
+// function handleLikeButton(card, userId) {
+//   if (card.likes.some((like) => like._id === userId)) {
+//     console.log(card);
+//     return likeRemove(card._id);
+//   }
+//   else {
+//     return likeAdd(card._id);
+//   }
+// }
+// console.log(handleLikeButton);
+
+// включение валидации всех форм
+enableValidation({
+  formElement: ".popup__form",
+  inputElement: ".popup__input",
+  buttonElement: ".popup__button",
+  inactiveButtonClass: "popup__button-inactive",
+  inputErrorClass: "popup__input-error",
+  errorClass: "`.${inputElement.id}-error`",
+});
+
+// Очистка ошибок валидации
+
+// Редактирование аватара
+function handleFormSubmitAvatar(evt) {
+  evt.preventDefault();
+  const avatarUrl = avatarInput.value;
+
+  editAvatar(avatarUrl).then((data) => {
+    profileImage.style.backgroundImage = `url(${data.avatar})`;
+    console.log(data.avatar);
+  });
+}
 
 // событие открытия редактирования профиля
 profileEditButton.addEventListener("click", function () {
@@ -106,4 +154,3 @@ profileEditButton.addEventListener("click", function () {
 profileAddButton.addEventListener("click", function () {
   openModal(popupTypeNewCard);
 });
-

@@ -1,3 +1,4 @@
+import { likeAdd, likeRemove } from "./api";
 const cardTemplate = document.querySelector("#card-template").content;
 
 export function createCard(cardData, removeCard, openImagePopup, likeCard, userId) {
@@ -5,13 +6,13 @@ export function createCard(cardData, removeCard, openImagePopup, likeCard, userI
   cardElement.querySelector(".card__image").src = cardData.link;
   cardElement.querySelector(".card__image").alt = cardData.name;
   cardElement.querySelector(".card__title").textContent = cardData.name;
-  cardElement.querySelector('.like__counter').textContent = cardData.likes.length;
+  cardElement.querySelector(".like__counter").textContent =
+    cardData.likes.length;
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
   if (cardData.owner._id === userId) {
-    deleteButton.addEventListener('click', removeCard);
-  }
-  else {
+    deleteButton.addEventListener("click", removeCard);
+  } else {
     deleteButton.remove();
   }
 
@@ -29,7 +30,8 @@ export function createCard(cardData, removeCard, openImagePopup, likeCard, userI
 export function removeCard(card) {
   card.target.closest(".card").remove();
 }
+
 // функция лайка карточек
 export function likeCard(evt) {
-  evt.target.classList.toggle("card__like-button_is-active");
+   evt.target.classList.toggle("card__like-button_is-active");
 }
