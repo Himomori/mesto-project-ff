@@ -99,7 +99,7 @@ export function handleNewCardFormSubmit(evt) {
   );
   cardsContainer.prepend(newCardElement);
   createNewCard(name, link);
-
+  
   nameInput.value = "";
   cardUrl.value = "";
   closeModal(popupTypeNewCard);

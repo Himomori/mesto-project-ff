@@ -10,7 +10,7 @@ export function createCard(cardData, removeCard, openImagePopup, likeCard, userI
     cardData.likes.length;
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
-  if (cardData.owner._id === userId) {
+  if (!userId || !cardData.owner || userId === cardData.owner._id) {
     deleteButton.addEventListener("click", removeCard);
   } else {
     deleteButton.remove();
