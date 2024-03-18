@@ -10,6 +10,7 @@ import {
   getUserData,
   getCardsData,
   createNewCard,
+  editProfile,
   likeAdd,
   likeRemove,
   editAvatar
@@ -19,7 +20,7 @@ const popups = document.querySelectorAll(".popup");
 const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const popupTypeNewCard = document.querySelector(".popup_type_new-card");
-const popupAvatar = document.querySelector('.popup_type_avatar');
+const popupNewAvatar = document.querySelector('.popup_type_avatar');
 const popupTypeEdit = document.querySelector(".popup_type_edit");
 const cardsContainer = document.querySelector(".places__list");
 const popupTypeImage = document.querySelector(".popup_type_image");
@@ -36,6 +37,9 @@ const formNewPlace = document.querySelector('[name="new-place"]');
 const avatarInput = document.querySelector('.popup__input_type_avatar')
 const cardName = document.querySelector(".popup__input_type_card-name");
 const cardUrl = document.querySelector(".popup__input_type_url");
+const buttonTypeAvatar = document.querySelector('.popup__button_type_avatar');
+const buttonTypeEdit = document.querySelector('.popup__button_type_edit');
+const buttonTypeNewCard = document.querySelector('.popup__button_type_new-card');
 
 // функция открытия модального окна картинки карточки
 export function openImagePopup(cardData) {
@@ -68,12 +72,11 @@ Promise.all([getUserData, getCardsData])
 // форма редактирования профиля
 function profileFormSubmit(evt) {
   evt.preventDefault();
-  const defoltText = profileAddButton.textContent;
-  profileAddButton.textContent = 'Сохранение...';
-  handleProfileFormSubmit(nameInput.value, jobInput.value)
-  .then ((element) => {
-    const userName  = element.name;
-    const userAbout = element.about;
+  buttonTypeEdit.textContent = 'Сохранение...';
+  editProfile(nameInput.value, jobInput.value)
+  .then ((elem) => {
+    const userName  = elem.name;
+    const userAbout = elem.about;
   
     profileTitle.textContent = userName;
     profileDescription.textContent = userAbout;
@@ -84,7 +87,7 @@ function profileFormSubmit(evt) {
     console.error(err);
   })
   .finally(() => {
-    profileEditButton.textContent = defoltText;
+    buttonTypeEdit.textContent = 'Сохранить';
   });
   }  
 
@@ -111,6 +114,7 @@ export function handleNewCardFormSubmit(evt) {
 
   nameInput.value = "";
   cardUrl.value = "";
+  
   closeModal(popupTypeNewCard);
 
   formNewPlace.reset();
@@ -144,12 +148,21 @@ enableValidation({
 // Редактирование аватара
 function handleFormSubmitAvatar(evt) {
   evt.preventDefault();
+  buttonTypeAvatar.textContent = 'Сохранение...';
   const avatarUrl = avatarInput.value;
 
   editAvatar(avatarUrl)
   .then((data) => {
-    profileImage.style.backgroundImage = `url(${data.avatar})`;
+    profileImage.style.backgroundImage = `url(${data.avatar})`
+   .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      buttonTypeEdit.textContent = 'Сохранить';
+    });
+    
   });
+  closeModal(popupNewAvatar);
 }
 
 formAvatar.addEventListener('submit', handleFormSubmitAvatar);
@@ -164,7 +177,7 @@ profileEditButton.addEventListener("click", function () {
 profileAddButton.addEventListener("click", function () {
   openModal(popupTypeNewCard);
 });
-
+// cобытие открытия формы смены аватара
 profileImage.addEventListener('click', function () {
-  openModal(popupAvatar);
+  openModal(popupNewAvatar);
 });

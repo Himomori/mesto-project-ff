@@ -29,14 +29,21 @@ export const getCardsData = fetch(`${config.baseUrl}/cards`, {
 });
 
 // Редактирование профиля
-fetch(`${config.baseUrl}/users/me`, {
+export function editProfile() {
+return fetch(`${config.baseUrl}/users/me`, {
   method: "PATCH",
   headers: config.headers,
   body: JSON.stringify({
     name: "Nataxa",
     about: "Protivopixotnaya mina",
   }),
+}).then((res) => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка: ${res.status}`);
 });
+}
 
 // Добавление новой карточки
 export function createNewCard(name, link) {
@@ -80,7 +87,7 @@ export const likeRemove = (cardId) => {
 };
 
 export function editAvatar(url) {
-  fetch(`${config.baseUrl}/users/me/avatar`, {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({

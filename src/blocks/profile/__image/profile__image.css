@@ -14,7 +14,7 @@
 .profile__image:hover {
   content: '';
   cursor: pointer;
-  /* background: transparent url('../../../images/edit-icon.svg'); */
+  background: transparent url('../../../images/edit-icon.svg');
   background-color: rgba(0, 0, 0, 0.5);
 }
 
