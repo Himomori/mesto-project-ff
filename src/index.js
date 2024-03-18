@@ -1,5 +1,5 @@
 import "./pages/index.css";
-import { createCard, likeCard, removeCard } from "./components/card.js";
+import { createCard, removeCard } from "./components/card.js";
 import {
   openModal,
   closeModal,
@@ -11,8 +11,7 @@ import {
   getCardsData,
   createNewCard,
   likeAdd,
-  likeRemove,
-  editAvatar,
+  likeRemove
 } from "./components/api.js";
 
 const popups = document.querySelectorAll(".popup");
@@ -50,7 +49,8 @@ popups.forEach(function (popup) {
 });
 
 // загрузка информации о пользователе и карточек с сервера и их вывод
-Promise.all([getUserData, getCardsData]).then(([userData, cardsData]) => {
+Promise.all([getUserData, getCardsData])
+.then(([userData, cardsData]) => {
   let userId = userData._id;
   profileTitle.textContent = userData.name;
   profileDescription.textContent = userData.about;
@@ -76,6 +76,28 @@ function handleProfileFormSubmit(evt) {
 
 formEditProfile.addEventListener("submit", handleProfileFormSubmit);
 
+function ProfileFormSubmit(evt) {
+  evt.preventDefault();
+  profileAddButton.textContent = 'Сохранение...';
+  handleProfileFormSubmit(nameInput.value, jobInput.value)
+  .then ((element) => {
+    const userName  = element.name;
+    const userAbout = element.about;
+  
+    profileTitle.textContent = userName;
+    profileDescription.textContent = userAbout;
+  
+    closeModal(popupTypeEdit);
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(() => {
+    profileEditButton.textContent = 'Сохранение';
+  });
+  }  
+
+
 // форма добавления новых карточек
 export function handleNewCardFormSubmit(evt) {
   evt.preventDefault();
@@ -83,23 +105,21 @@ export function handleNewCardFormSubmit(evt) {
   const name = cardName.value;
   const link = cardUrl.value;
 
-  const newCard = {
-    name: name,
-    alt: name,
-    link: link,
-    likes: [],
-  };
+  Promise.all([createNewCard(name, link), getUserData])
+  .then(([newCardData, userData]) => {
+    console.log("newCardData");
+    console.log(newCardData);
 
-  // Добавление новой карточки
-  const newCardElement = createCard(
-    newCard,
-    removeCard,
-    openImagePopup,
-    likeCard
-  );
-  cardsContainer.prepend(newCardElement);
-  createNewCard(name, link);
-  
+    const newCardElement = createCard(
+      newCardData,
+      removeCard,
+      openImagePopup,
+      likeCard,
+      userData._id
+    );
+    cardsContainer.prepend(newCardElement);
+  })
+
   nameInput.value = "";
   cardUrl.value = "";
   closeModal(popupTypeNewCard);
@@ -110,16 +130,16 @@ export function handleNewCardFormSubmit(evt) {
 formNewPlace.addEventListener("submit", handleNewCardFormSubmit);
 
 // Функция добавления и удаления лайка
-// function handleLikeButton(card, userId) {
-//   if (card.likes.some((like) => like._id === userId)) {
-//     console.log(card);
-//     return likeRemove(card._id);
-//   }
-//   else {
-//     return likeAdd(card._id);
-//   }
-// }
-// console.log(handleLikeButton);
+function likeCard(cardData, userId) {
+  if (cardData.likes.some((like) => like._id === userId)) {
+    return likeRemove(cardData._id);
+  }
+  else {
+    const res = likeAdd(cardData._id);
+    console.log(res);
+    return res;
+  }
+}
 
 // включение валидации всех форм
 enableValidation({
