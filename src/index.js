@@ -11,13 +11,15 @@ import {
   getCardsData,
   createNewCard,
   likeAdd,
-  likeRemove
+  likeRemove,
+  editAvatar
 } from "./components/api.js";
 
 const popups = document.querySelectorAll(".popup");
 const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const popupTypeNewCard = document.querySelector(".popup_type_new-card");
+const popupAvatar = document.querySelector('.popup__content_avatar');
 const popupTypeEdit = document.querySelector(".popup_type_edit");
 const cardsContainer = document.querySelector(".places__list");
 const popupTypeImage = document.querySelector(".popup_type_image");
@@ -98,8 +100,6 @@ function profileFormSubmit(evt) {
   });
   }  
 
-  console.log(profileFormSubmit);
-
   formEditProfile.addEventListener("submit", profileFormSubmit);
 
 // форма добавления новых карточек
@@ -111,9 +111,6 @@ export function handleNewCardFormSubmit(evt) {
 
   Promise.all([createNewCard(name, link), getUserData])
   .then(([newCardData, userData]) => {
-    console.log("newCardData");
-    console.log(newCardData);
-
     const newCardElement = createCard(
       newCardData,
       removeCard,
@@ -140,7 +137,6 @@ function likeCard(cardData, userId) {
   }
   else {
     const res = likeAdd(cardData._id);
-    console.log(res);
     return res;
   }
 }

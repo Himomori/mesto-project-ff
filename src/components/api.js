@@ -49,9 +49,8 @@ export function createNewCard(name, link) {
     }),
   })
   .then((res) => res.json())
-  .then(data => {
-    console.log(data);
-    return data;
+  .then(res => {
+    return res;
   });
 }
 
@@ -78,14 +77,17 @@ export const likeRemove = (cardId) => {
   })
 };
 
-
-//  Обновление аватара пользователя
-export const editAvatar = (url) => {
-  fetch('https://nomoreparties.co/v1/wff-cohort-8/users/me/avatar', {
+export function editAvatar(url) {
+  fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
       avatar: url
-    })
+    }),
   })
+  .then((res) => res.json());
+//   .then(data => {
+//     console.log(data);
+//   });
+// }
 }
