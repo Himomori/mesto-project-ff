@@ -8,9 +8,13 @@
   background-position: center;
   margin: 0 29px 0 0;
   background-color: rgba(0, 0, 0, 0.0);
+
 }
 
 .profile__image:hover {
+  content: '';
+  cursor: pointer;
+  /* background: transparent url('../../../images/edit-icon.svg'); */
   background-color: rgba(0, 0, 0, 0.5);
 }
 

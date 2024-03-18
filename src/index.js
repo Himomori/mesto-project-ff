@@ -19,7 +19,7 @@ const popups = document.querySelectorAll(".popup");
 const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const popupTypeNewCard = document.querySelector(".popup_type_new-card");
-const popupAvatar = document.querySelector('.popup__content_avatar');
+const popupAvatar = document.querySelector('.popup_type_avatar');
 const popupTypeEdit = document.querySelector(".popup_type_edit");
 const cardsContainer = document.querySelector(".places__list");
 const popupTypeImage = document.querySelector(".popup_type_image");
@@ -31,10 +31,11 @@ const jobInput = document.querySelector(".popup__input_type_description");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileImage = document.querySelector(".profile__image");
+const formAvatar = document.querySelector('[name="edit-avatar"]')
 const formNewPlace = document.querySelector('[name="new-place"]');
+const avatarInput = document.querySelector('.popup__input_type_avatar')
 const cardName = document.querySelector(".popup__input_type_card-name");
 const cardUrl = document.querySelector(".popup__input_type_url");
-const likeCounter = document.querySelector(".like__counter");
 
 // функция открытия модального окна картинки карточки
 export function openImagePopup(cardData) {
@@ -161,9 +162,10 @@ function handleFormSubmitAvatar(evt) {
   editAvatar(avatarUrl)
   .then((data) => {
     profileImage.style.backgroundImage = `url(${data.avatar})`;
-    console.log(data.avatar);
   });
 }
+
+formAvatar.addEventListener('submit', handleFormSubmitAvatar);
 
 // событие открытия редактирования профиля
 profileEditButton.addEventListener("click", function () {
@@ -174,4 +176,8 @@ profileEditButton.addEventListener("click", function () {
 // событие открытия формы добавления карточки
 profileAddButton.addEventListener("click", function () {
   openModal(popupTypeNewCard);
+});
+
+profileImage.addEventListener('click', function () {
+  openModal(popupAvatar);
 });
