@@ -33,10 +33,10 @@ fetch(`${config.baseUrl}/users/me`, {
   method: "PATCH",
   headers: config.headers,
   body: JSON.stringify({
-    name: "skłodowska Curie",
-    about: "Physicist and Chemist",
+    name: "Nataxa",
+    about: "Protivopixotnaya mina",
   }),
-}); 
+});
 
 // Добавление новой карточки
 export function createNewCard(name, link) {
@@ -47,34 +47,36 @@ export function createNewCard(name, link) {
       name: name,
       link: link,
     }),
-  })
-  .then((res) => res.json())
-  .then(res => {
-    return res;
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   });
 }
 
 export const likeAdd = (cardId) => {
-  return fetch (`${config.baseUrl}/cards/likes/${cardId}`, {
-  method: 'PUT',
-  headers: config.headers,
-  })
-  .then(res => res.json())
-  .then(res => {
-    return res;
-  })
-
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "PUT",
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 };
-  
+
 export const likeRemove = (cardId) => {
-  return fetch (`${config.baseUrl}/cards/likes/${cardId}`, {
-  method: 'DELETE',
-  headers: config.headers,
-  })
-  .then(res => res.json())
-  .then(res => {
-    return res;
-  })
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 };
 
 export function editAvatar(url) {
@@ -82,12 +84,12 @@ export function editAvatar(url) {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
-      avatar: url
+      avatar: url,
     }),
-  })
-  .then((res) => res.json());
-//   .then(data => {
-//     console.log(data);
-//   });
-// }
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }

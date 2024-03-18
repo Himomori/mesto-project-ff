@@ -66,19 +66,6 @@ Promise.all([getUserData, getCardsData])
 });
 
 // форма редактирования профиля
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  const name = nameInput.value;
-  const job = jobInput.value;
-
-  profileTitle.textContent = name;
-  profileDescription.textContent = job;
-
-  closeModal(popupTypeEdit);
-}
-
-
-
 function profileFormSubmit(evt) {
   evt.preventDefault();
   const defoltText = profileAddButton.textContent;
