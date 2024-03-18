@@ -33,10 +33,10 @@ fetch(`${config.baseUrl}/users/me`, {
   method: "PATCH",
   headers: config.headers,
   body: JSON.stringify({
-    name: "Marie Skłodowska Curie",
+    name: "skłodowska Curie",
     about: "Physicist and Chemist",
   }),
-});
+}); 
 
 // Добавление новой карточки
 export function createNewCard(name, link) {
@@ -56,19 +56,13 @@ export function createNewCard(name, link) {
 }
 
 export const likeAdd = (cardId) => {
-  console.log("likeAdd");
-  console.log(cardId);
-
   return fetch (`${config.baseUrl}/cards/likes/${cardId}`, {
   method: 'PUT',
-  headers: {
-    authorization: '608951e4-f2bc-4947-a9fd-ed3c797c3b0f'
-  }
+  headers: config.headers,
   })
   .then(res => res.json())
-  .then(data => {
-    console.log(data);
-    return data;
+  .then(res => {
+    return res;
   })
 
 };
@@ -76,26 +70,20 @@ export const likeAdd = (cardId) => {
 export const likeRemove = (cardId) => {
   return fetch (`${config.baseUrl}/cards/likes/${cardId}`, {
   method: 'DELETE',
-  headers: {
-    authorization: '608951e4-f2bc-4947-a9fd-ed3c797c3b0f'
-  }
+  headers: config.headers,
   })
   .then(res => res.json())
-  .then(data => {
-    console.log(data);
-    return data;
+  .then(res => {
+    return res;
   })
 };
 
 
 //  Обновление аватара пользователя
-export function editAvatar(url) {
+export const editAvatar = (url) => {
   fetch('https://nomoreparties.co/v1/wff-cohort-8/users/me/avatar', {
     method: "PATCH",
-    headers: {
-      authorization: "608951e4-f2bc-4947-a9fd-ed3c797c3b0f",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify({
       avatar: url
     })

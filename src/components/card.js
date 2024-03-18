@@ -17,7 +17,7 @@ export function createCard(
   const likeCounter = cardElement.querySelector(".like__counter");
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
-  if (userId === cardData.owner._id) { // !userId || !cardData.owner || 
+  if (userId === cardData.owner._id) {
     deleteButton.addEventListener("click", removeCard);
   } else {
     deleteButton.remove();
@@ -39,16 +39,6 @@ export function createCard(
       .catch((err) => {
         console.log(err);
       });
-
-    // const res = likeCard(cardData, userId)
-    //   console.log(res);
-    // .then((card) => {
-    //   card.likeCounter.textContent = card.likes.length;
-    //   evt.target.classList.toggle('card__like-button_is-active');
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // })
   });
 
   if (cardData.likes.some((like) => like._id === userId)) {

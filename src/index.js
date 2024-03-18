@@ -74,10 +74,11 @@ function handleProfileFormSubmit(evt) {
   closeModal(popupTypeEdit);
 }
 
-formEditProfile.addEventListener("submit", handleProfileFormSubmit);
 
-function ProfileFormSubmit(evt) {
+
+function profileFormSubmit(evt) {
   evt.preventDefault();
+  const defoltText = profileAddButton.textContent;
   profileAddButton.textContent = 'Сохранение...';
   handleProfileFormSubmit(nameInput.value, jobInput.value)
   .then ((element) => {
@@ -93,10 +94,13 @@ function ProfileFormSubmit(evt) {
     console.error(err);
   })
   .finally(() => {
-    profileEditButton.textContent = 'Сохранение';
+    profileEditButton.textContent = defoltText;
   });
   }  
 
+  console.log(profileFormSubmit);
+
+  formEditProfile.addEventListener("submit", profileFormSubmit);
 
 // форма добавления новых карточек
 export function handleNewCardFormSubmit(evt) {
@@ -158,7 +162,8 @@ function handleFormSubmitAvatar(evt) {
   evt.preventDefault();
   const avatarUrl = avatarInput.value;
 
-  editAvatar(avatarUrl).then((data) => {
+  editAvatar(avatarUrl)
+  .then((data) => {
     profileImage.style.backgroundImage = `url(${data.avatar})`;
     console.log(data.avatar);
   });
