@@ -96,10 +96,9 @@ function profileFormSubmit(evt) {
 // форма добавления новых карточек
 export function handleNewCardFormSubmit(evt) {
   evt.preventDefault();
-
+  buttonTypeNewCard.textContent = 'Сохранение...';
   const name = cardName.value;
   const link = cardUrl.value;
-
   Promise.all([createNewCard(name, link), getUserData])
   .then(([newCardData, userData]) => {
     const newCardElement = createCard(
@@ -109,12 +108,14 @@ export function handleNewCardFormSubmit(evt) {
       likeCard,
       userData._id
     );
+    nameInput.value = "";
+    cardUrl.value = "";
     cardsContainer.prepend(newCardElement);
   })
+  .finally(() => {
+    buttonTypeNewCard.textContent = 'Сохранить';
+  })
 
-  nameInput.value = "";
-  cardUrl.value = "";
-  
   closeModal(popupTypeNewCard);
 
   formNewPlace.reset();
@@ -148,20 +149,20 @@ enableValidation({
 // Редактирование аватара
 function handleFormSubmitAvatar(evt) {
   evt.preventDefault();
-  buttonTypeAvatar.textContent = 'Сохранение...';
   const avatarUrl = avatarInput.value;
+  buttonTypeAvatar.textContent = 'Сохранение...';
 
   editAvatar(avatarUrl)
   .then((data) => {
-    profileImage.style.backgroundImage = `url(${data.avatar})`
+    profileImage.style.backgroundImage = (`url(${data.avatar})`);
+  })
    .catch((err) => {
       console.error(err);
     })
     .finally(() => {
-      buttonTypeEdit.textContent = 'Сохранить';
+      buttonTypeAvatar.textContent = 'Сохранить';
     });
-    
-  });
+
   closeModal(popupNewAvatar);
 }
 
