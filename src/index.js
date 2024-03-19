@@ -1,5 +1,5 @@
 import "./pages/index.css";
-import { createCard, removeCard } from "./components/card.js";
+import { createCard } from "./components/card.js";
 import {
   openModal,
   closeModal,
@@ -11,6 +11,7 @@ import {
   getCardsData,
   createNewCard,
   editProfile,
+  deleteCard,
   likeAdd,
   likeRemove,
   editAvatar
@@ -123,6 +124,11 @@ export function handleNewCardFormSubmit(evt) {
 
 formNewPlace.addEventListener("submit", handleNewCardFormSubmit);
 
+// функция удаления карточек
+export function removeCard(cardData) {
+  return deleteCard(cardData._id);
+}
+
 // Функция добавления и удаления лайка
 function likeCard(cardData, userId) {
   if (cardData.likes.some((like) => like._id === userId)) {
@@ -137,14 +143,15 @@ function likeCard(cardData, userId) {
 // включение валидации всех форм
 enableValidation({
   formElement: ".popup__form",
-  inputElement: ".popup__input",
+  inputSelector: ".popup__input",
   buttonElement: ".popup__button",
   inactiveButtonClass: "popup__button-inactive",
   inputErrorClass: "popup__input-error",
-  errorClass: "`.${inputElement.id}-error`",
+  errorClass: "`.${inputElement.id}-error`", 
 });
 
 // Очистка ошибок валидации
+
 
 // Редактирование аватара
 function handleFormSubmitAvatar(evt) {

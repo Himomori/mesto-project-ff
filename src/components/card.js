@@ -18,7 +18,10 @@ export function createCard(
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
   if (userId === cardData.owner._id) {
-    deleteButton.addEventListener("click", removeCard);
+    deleteButton.addEventListener("click", function (evt) { 
+      cardElement.closest(".card").remove();
+      removeCard(cardData);
+    });
   } else {
     deleteButton.remove();
   }
@@ -48,8 +51,4 @@ export function createCard(
   }
 
   return cardElement;
-}
-// функция удаления карточек
-export function removeCard(card) {
-  card.target.closest(".card").remove();
 }

@@ -1,30 +1,30 @@
 // Функция, которая добавляет класс с ошибкой
-export function showInputError(formElement, inputElement, errorMessage) {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add("popup__input-error");
+export function showInputError(formElement, inputSelector, errorMessage) {
+  const errorElement = formElement.querySelector(`.${inputSelector.id}-error`);
+  inputSelector.classList.add("popup__input-error");
   errorElement.classList.add("popup__input-error_active");
   errorElement.textContent = errorMessage;
 }
 
 // Функция, которая удаляет класс с ошибкой
-export function hideInputError(formElement, inputElement) {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove("popup__input-error");
+export function hideInputError(formElement, inputSelector) {
+  const errorElement = formElement.querySelector(`.${inputSelector.id}-error`);
+  inputSelector.classList.remove("popup__input-error");
   errorElement.classList.remove("popup__input-error_active");
-  errorElement.textContent = "";
+  errorElement.textContent = ""; 
 }
 
 // Функция, которая проверяет валидность поля
-export function checkInputValidity(formElement, inputElement) {
-  if (inputElement.validity.patternMismatch) {
-    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+export function checkInputValidity(formElement, inputSelector) {
+  if (inputSelector.validity.patternMismatch) {
+    inputSelector.setCustomValidity(inputSelector.dataset.errorMessage);
   } else {
-    inputElement.setCustomValidity("");
+    inputSelector.setCustomValidity("");
   }
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+  if (!inputSelector.validity.valid) {
+    showInputError(formElement, inputSelector, inputSelector.validationMessage);
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputSelector);
   }
 }
 
@@ -32,9 +32,9 @@ export function checkInputValidity(formElement, inputElement) {
 export function setEventListeners(formElement) {
   const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
   const buttonElement = formElement.querySelector(".popup__button");
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener("input", function () {
-      checkInputValidity(formElement, inputElement);
+  inputList.forEach((inputSelector) => {
+    inputSelector.addEventListener("input", function () {
+      checkInputValidity(formElement, inputSelector);
       toggleButtonState(inputList, buttonElement);
     });
   });
@@ -54,8 +54,8 @@ export function enableValidation() {
 
 // Функция, которая проверяет валидность поля
 export function hasInvalidInput(inputList) {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
+  return inputList.some((inputSelector) => {
+    return !inputSelector.validity.valid;
   });
 }
 
