@@ -6,27 +6,24 @@ const config = {
   },
 };
 
+function getResponseData(res) {
+  if (!res.ok) {
+      return Promise.reject(`Ошибка: ${res.status}`); 
+  }
+  return res.json();
+}
+
 // Загрузка информации о пользователе с сервера
 export const getUserData = fetch(`${config.baseUrl}/users/me`, {
   method: "GET",
   headers: config.headers,
-}).then((res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка: ${res.status}`);
-});
+}).then(getResponseData);
 
 // Загрузка карточек с сервера
 export const getCardsData = fetch(`${config.baseUrl}/cards`, {
   method: "GET",
   headers: config.headers,
-}).then((res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка: ${res.status}`);
-});
+}).then(getResponseData);
 
 // Редактирование профиля
 export function editProfile() {
@@ -37,12 +34,7 @@ return fetch(`${config.baseUrl}/users/me`, {
     name: "Nataxa",
     about: "Protivopixotnaya mina",
   }),
-}).then((res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка: ${res.status}`);
-});
+}).then(getResponseData);
 }
 
 // Добавление новой карточки
@@ -54,48 +46,28 @@ export function createNewCard(name, link) {
       name: name,
       link: link,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 }
 
 export const deleteCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
-};
+  }).then(getResponseData);
+}
 
 export const likeAdd = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 };
 
 export const likeRemove = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 };
 
 export function editAvatar(url) {
@@ -105,10 +77,5 @@ export function editAvatar(url) {
     body: JSON.stringify({
       avatar: url,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 }
