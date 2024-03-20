@@ -22,7 +22,7 @@
   background: transparent url('../../../images/edit-icon.svg') 50% no-repeat;
   display: none;
   height: 100%;
-  background-size: 25%;
+  background-size: 20%;
 }
 
 .profile__image:hover .profile__image_edit_icon {

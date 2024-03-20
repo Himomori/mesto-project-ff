@@ -115,7 +115,7 @@ export function handleNewCardFormSubmit(evt) {
       );
       nameInput.value = "";
       cardUrl.value = "";
-      cardsContainer.prepend(newCardElement);
+      cardsContainer.prepend(newCardElement); 
     })
     .finally(() => {
       buttonTypeNewCard.textContent = "Сохранить";
@@ -144,28 +144,28 @@ function likeCard(cardData, userId) {
 
 const validationConfig = {
   formSelector: ".popup__form",
-  inputElement: "popup__input",
-  submitButtonSelector: "popup__button",
-  inactiveButtonClass: "popup__button-inactive",
-  inputErrorClass: "popup__input-error",
-  inputErrorClassActive: "popup__input-error_active",
-  errorClass: "`.${inputSelector.id}-error`",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: ".popup__button-inactive",
+  inputErrorClass: ".popup__input-error",
+  inputErrorClassActive: ".popup__input-error_active",
+  errorClass: ".popup__error_visible",
 };
 
 // // включение валидации всех форм
-function clearValidation(formElement, config) {
+function clearValidation(formElement, validationConfig) {
   const inputElements = Array.from(
-    formElement.querySelectorAll(".popup__input")
+    formElement.querySelectorAll(validationConfig.inputSelector)
   );
   inputElements.forEach((inputElement) => {
-    inputElement.classList.remove(".popup__input-error_active");
+    inputElement.classList.remove(validationConfig.inputErrorClassActive);
   });
   const errorElements = Array.from(
-    formElement.querySelectorAll(".popup__input-error")
+    formElement.querySelectorAll(validationConfig.inputErrorClass)
   );
   errorElements.forEach((errorElement) => {
     errorElement.textContent = "";
-    errorElement.classList.remove(".popup__input-error_active");
+    errorElement.classList.remove(validationConfig.inputErrorClassActive);
   });
 }
 // Редактирование аватара

@@ -18,7 +18,7 @@ export function createCard(
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
   if (userId === cardData.owner._id) {
-    deleteButton.addEventListener("click", function (evt) { 
+    deleteButton.addEventListener("click", function () { 
       cardElement.closest(".card").remove();
       removeCard(cardData);
     });
