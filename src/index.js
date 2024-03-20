@@ -5,7 +5,7 @@ import {
   closeModal,
   handleCloseModalByClick,
 } from "./components/modal.js";
-import { enableValidation } from "./components/validation.js";
+import { enableValidation, hideInputError, toggleButtonState } from "./components/validation.js";
 import {
   getUserData,
   getCardsData,
@@ -82,9 +82,6 @@ function profileFormSubmit(evt) {
 
       profileTitle.textContent = userName;
       profileDescription.textContent = userAbout;
-
-      console.log(editProfile);
-      closeModal(popupTypeEdit);
     })
     .catch((err) => {
       console.error(err);
@@ -92,6 +89,7 @@ function profileFormSubmit(evt) {
     .finally(() => {
       buttonTypeEdit.textContent = "Сохранить";
     });
+    closeModal(popupTypeEdit);
 }
 
 formEditProfile.addEventListener("submit", profileFormSubmit);
@@ -120,7 +118,6 @@ export function handleNewCardFormSubmit(evt) {
     });
 
   closeModal(popupTypeNewCard);
-
   formNewPlace.reset();
 }
 
@@ -142,18 +139,27 @@ function likeCard(cardData, userId) {
 }
 
 const validationConfig = {
-  formElement: ".popup__form",
-  inputSelector: ".popup__input",
-  buttonElement: ".popup__button",
+  formSelector: ".popup__form",
+  inputElement: "popup__input",
+  submitButtonSelector: "popup__button",
   inactiveButtonClass: "popup__button-inactive",
   inputErrorClass: "popup__input-error",
   inputErrorClassActive: "popup__input-error_active",
   errorClass: "`.${inputSelector.id}-error`",
 };
 
-// включение валидации всех форм
-enableValidation(validationConfig);
-
+// // включение валидации всех форм
+function clearValidation(formElement, config) {
+  const inputElements = Array.from(formElement.querySelectorAll('.popup__input'));
+  inputElements.forEach((inputElement) => {
+    inputElement.classList.remove('.popup__input-error_active')
+  })
+  const errorElements = Array.from(formElement.querySelectorAll(".popup__input-error"));
+  errorElements.forEach((errorElement) => {
+    errorElement.textContent = '';
+    errorElement.classList.remove('.popup__input-error_active');
+  });
+}
 // Редактирование аватара
 function handleFormSubmitAvatar(evt) {
   evt.preventDefault();
@@ -180,6 +186,7 @@ formAvatar.addEventListener("submit", handleFormSubmitAvatar);
 profileEditButton.addEventListener("click", function () {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
+  clearValidation(formEditProfile, validationConfig);
   openModal(popupTypeEdit);
 });
 // событие открытия формы добавления карточки
