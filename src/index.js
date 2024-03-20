@@ -5,7 +5,11 @@ import {
   closeModal,
   handleCloseModalByClick,
 } from "./components/modal.js";
-import { enableValidation, hideInputError, toggleButtonState } from "./components/validation.js";
+import {
+  enableValidation,
+  hideInputError,
+  toggleButtonState,
+} from "./components/validation.js";
 import {
   getUserData,
   getCardsData,
@@ -89,7 +93,7 @@ function profileFormSubmit(evt) {
     .finally(() => {
       buttonTypeEdit.textContent = "Сохранить";
     });
-    closeModal(popupTypeEdit);
+  closeModal(popupTypeEdit);
 }
 
 formEditProfile.addEventListener("submit", profileFormSubmit);
@@ -150,14 +154,18 @@ const validationConfig = {
 
 // // включение валидации всех форм
 function clearValidation(formElement, config) {
-  const inputElements = Array.from(formElement.querySelectorAll('.popup__input'));
+  const inputElements = Array.from(
+    formElement.querySelectorAll(".popup__input")
+  );
   inputElements.forEach((inputElement) => {
-    inputElement.classList.remove('.popup__input-error_active')
-  })
-  const errorElements = Array.from(formElement.querySelectorAll(".popup__input-error"));
+    inputElement.classList.remove(".popup__input-error_active");
+  });
+  const errorElements = Array.from(
+    formElement.querySelectorAll(".popup__input-error")
+  );
   errorElements.forEach((errorElement) => {
-    errorElement.textContent = '';
-    errorElement.classList.remove('.popup__input-error_active');
+    errorElement.textContent = "";
+    errorElement.classList.remove(".popup__input-error_active");
   });
 }
 // Редактирование аватара
