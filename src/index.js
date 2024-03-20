@@ -64,7 +64,7 @@ popups.forEach(function (popup) {
 
 // загрузка информации о пользователе и карточек с сервера и их вывод
 Promise.all([getUserData, getCardsData]).then(([userData, cardsData]) => {
-  let userId = userData._id;
+  const userId = userData._id;
   profileTitle.textContent = userData.name;
   profileDescription.textContent = userData.about;
   profileImage.style.backgroundImage = `url(${userData.avatar})`;
@@ -81,21 +81,17 @@ function profileFormSubmit(evt) {
   buttonTypeEdit.textContent = "Сохранение...";
   editProfile(nameInput.value, jobInput.value)
     .then((element) => {
-      const userName = element.name;
-      const userAbout = element.about;
-
-      profileTitle.textContent = userName;
-      profileDescription.textContent = userAbout;
+      profileTitle.textContent = element.name;
+      profileDescription.textContent = element.about;
     })
     .catch((err) => {
       console.error(err);
     })
     .finally(() => {
       buttonTypeEdit.textContent = "Сохранить";
+      closeModal(popupTypeEdit);
     });
-  closeModal(popupTypeEdit);
 }
-
 formEditProfile.addEventListener("submit", profileFormSubmit);
 
 // форма добавления новых карточек
@@ -122,7 +118,6 @@ export function handleNewCardFormSubmit(evt) {
     });
 
   closeModal(popupTypeNewCard);
-  formNewPlace.reset();
 }
 
 formNewPlace.addEventListener("submit", handleNewCardFormSubmit);
