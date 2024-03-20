@@ -6,9 +6,7 @@ import {
   handleCloseModalByClick,
 } from "./components/modal.js";
 import {
-  enableValidation,
-  hideInputError,
-  toggleButtonState,
+  enableValidation, clearValidation
 } from "./components/validation.js";
 import {
   getUserData,
@@ -137,32 +135,6 @@ function likeCard(cardData, userId) {
   }
 }
 
-const validationConfig = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: ".popup__button-inactive",
-  inputErrorClass: ".popup__input-error",
-  inputErrorClassActive: ".popup__input-error_active",
-  errorClass: ".popup__error_visible",
-};
-
-// // включение валидации всех форм
-function clearValidation(formElement, validationConfig) {
-  const inputElements = Array.from(
-    formElement.querySelectorAll(validationConfig.inputSelector)
-  );
-  inputElements.forEach((inputElement) => {
-    inputElement.classList.remove(validationConfig.inputErrorClassActive);
-  });
-  const errorElements = Array.from(
-    formElement.querySelectorAll(validationConfig.inputErrorClass)
-  );
-  errorElements.forEach((errorElement) => {
-    errorElement.textContent = "";
-    errorElement.classList.remove(validationConfig.inputErrorClassActive);
-  });
-}
 // Редактирование аватара
 function handleFormSubmitAvatar(evt) {
   evt.preventDefault();
