@@ -5,9 +5,7 @@ import {
   closeModal,
   handleCloseModalByClick,
 } from "./components/modal.js";
-import {
-  enableValidation, clearValidation
-} from "./components/validation.js";
+import { enableValidation, clearValidation } from "./components/validation.js";
 import {
   getUserData,
   getCardsData,
@@ -46,6 +44,8 @@ const buttonTypeNewCard = document.querySelector(
   ".popup__button_type_new-card"
 );
 
+let USER_ID = '';
+
 // функция открытия модального окна картинки карточки
 export function openImagePopup(cardData) {
   popupImg.src = cardData.link;
@@ -62,13 +62,14 @@ popups.forEach(function (popup) {
 
 // загрузка информации о пользователе и карточек с сервера и их вывод
 Promise.all([getUserData, getCardsData]).then(([userData, cardsData]) => {
-  const userId = userData._id;
+  // const userId = userData._id;
+  USER_ID = userData._id;
   profileTitle.textContent = userData.name;
   profileDescription.textContent = userData.about;
   profileImage.style.backgroundImage = `url(${userData.avatar})`;
   cardsData.forEach((item) => {
     cardsContainer.append(
-      createCard(item, removeCard, openImagePopup, likeCard, userId)
+      createCard(item, deleteCard, openImagePopup, likeRemove, likeAdd, USER_ID)
     );
   });
 });
@@ -98,42 +99,29 @@ export function handleNewCardFormSubmit(evt) {
   buttonTypeNewCard.textContent = "Сохранение...";
   const name = cardName.value;
   const link = cardUrl.value;
-  Promise.all([createNewCard(name, link), getUserData])
-    .then(([newCardData, userData]) => {
+  createNewCard(name, link)
+    .then((newCardData) => {
       const newCardElement = createCard(
         newCardData,
-        removeCard,
+        deleteCard,
         openImagePopup,
-        likeCard,
-        userData._id
+        likeRemove,
+        likeAdd,
+        USER_ID
       );
+      console.log(USER_ID);
       nameInput.value = "";
       cardUrl.value = "";
-      cardsContainer.prepend(newCardElement); 
+      cardsContainer.prepend(newCardElement);
     })
     .finally(() => {
       buttonTypeNewCard.textContent = "Сохранить";
+      closeModal(popupTypeNewCard);
     });
-
-  closeModal(popupTypeNewCard);
 }
 
 formNewPlace.addEventListener("submit", handleNewCardFormSubmit);
 
-// функция удаления карточек
-export function removeCard(cardData) {
-  return deleteCard(cardData._id);
-}
-
-// Функция добавления и удаления лайка
-function likeCard(cardData, userId) {
-  if (cardData.likes.some((like) => like._id === userId)) {
-    return likeRemove(cardData._id);
-  } else {
-    const res = likeAdd(cardData._id);
-    return res;
-  }
-}
 
 // Редактирование аватара
 function handleFormSubmitAvatar(evt) {
@@ -150,18 +138,16 @@ function handleFormSubmitAvatar(evt) {
     })
     .finally(() => {
       buttonTypeAvatar.textContent = "Сохранить";
+      closeModal(popupNewAvatar);
     });
-
-  closeModal(popupNewAvatar);
 }
-
 formAvatar.addEventListener("submit", handleFormSubmitAvatar);
 
 // событие открытия редактирования профиля
 profileEditButton.addEventListener("click", function () {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
-  clearValidation(formEditProfile, validationConfig);
+  // clearValidation(formEditProfile, validationConfig);
   openModal(popupTypeEdit);
 });
 // событие открытия формы добавления карточки

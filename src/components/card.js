@@ -2,26 +2,33 @@ const cardTemplate = document.querySelector("#card-template").content;
 
 export function createCard(
   cardData,
-  removeCard,
+  deleteCard,
   openImagePopup,
-  likeCard,
+  likeRemove,
+  likeAdd,
   userId
 ) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   cardElement.querySelector(".card__image").src = cardData.link;
   cardElement.querySelector(".card__image").alt = cardData.name;
   cardElement.querySelector(".card__title").textContent = cardData.name;
-  cardElement.querySelector(".like__counter").textContent =
-    cardData.likes.length;
 
   const likeCounter = cardElement.querySelector(".like__counter");
+  likeCounter.textContent = cardData.likes.length;
+
+  console.log(userId);
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
   if (userId === cardData.owner._id) {
-    deleteButton.addEventListener("click", function () { 
-      cardElement.closest(".card").remove();
-      removeCard(cardData);
-    });
+    deleteButton.addEventListener("click", function (evt) {
+      deleteCard(cardData._id)
+      .then(() => {
+        cardElement.closest(".card").remove();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    })  
   } else {
     deleteButton.remove();
   }
@@ -33,7 +40,7 @@ export function createCard(
 
   const likeButton = cardElement.querySelector(".card__like-button");
   likeButton.addEventListener("click", function (evt) {
-    likeCard(cardData, userId)
+    likeCard( likeAdd, likeRemove, cardData, userId)
       .then((newCardData) => {
         likeCounter.textContent = newCardData.likes.length;
         evt.target.classList.toggle("card__like-button_is-active");
@@ -44,11 +51,20 @@ export function createCard(
       });
   });
 
-  if (cardData.likes.some((like) => like._id === userId)) {
-    likeButton.classList.add("card__like-button_is-active");
-  } else {
-    likeButton.classList.remove("card__like-button_is-active");
-  }
-
   return cardElement;
 }
+
+// функция добавления лайка
+function likeCard(likeAdd, likeRemove, cardData, userId) {
+  if (cardData.likes.some((like) => like._id === userId)) {
+    return likeRemove(cardData._id);
+  } else {
+    return likeAdd(cardData._id);
+  }
+}
+
+
+// не особо рабочий варик, функция удаления карточек
+// function removeCard(cardData, deleteCard) {
+//   return deleteCard(cardData._id);
+// }
