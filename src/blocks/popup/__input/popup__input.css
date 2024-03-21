@@ -14,11 +14,12 @@
   margin-bottom: 0;
 }
 
-/* .popup__input:invalid {
-  border-bottom: 1px solid red;
-} */
 
-.popup__error_visible {
+.popup__input-error {
+  border-bottom-color: red;
+}
+
+.popup__input-error_active {
   color: red;
 }
 

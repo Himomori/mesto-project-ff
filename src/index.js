@@ -5,7 +5,7 @@ import {
   closeModal,
   handleCloseModalByClick,
 } from "./components/modal.js";
-import { enableValidation, clearValidation } from "./components/validation.js";
+import { hideInputError, showInputError } from "./components/validation.js";
 import {
   getUserData,
   getCardsData,
