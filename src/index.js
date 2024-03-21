@@ -44,7 +44,7 @@ const buttonTypeNewCard = document.querySelector(
   ".popup__button_type_new-card"
 );
 
-let USER_ID = '';
+let userId = '';
 
 // функция открытия модального окна картинки карточки
 export function openImagePopup(cardData) {
@@ -62,14 +62,13 @@ popups.forEach(function (popup) {
 
 // загрузка информации о пользователе и карточек с сервера и их вывод
 Promise.all([getUserData, getCardsData]).then(([userData, cardsData]) => {
-  // const userId = userData._id;
-  USER_ID = userData._id;
+  userId = userData._id;
   profileTitle.textContent = userData.name;
   profileDescription.textContent = userData.about;
   profileImage.style.backgroundImage = `url(${userData.avatar})`;
   cardsData.forEach((item) => {
     cardsContainer.append(
-      createCard(item, deleteCard, openImagePopup, likeRemove, likeAdd, USER_ID)
+      createCard(item, deleteCard, openImagePopup, likeRemove, likeAdd, userId)
     );
   });
 });
@@ -107,9 +106,8 @@ export function handleNewCardFormSubmit(evt) {
         openImagePopup,
         likeRemove,
         likeAdd,
-        USER_ID
+        userId
       );
-      console.log(USER_ID);
       nameInput.value = "";
       cardUrl.value = "";
       cardsContainer.prepend(newCardElement);

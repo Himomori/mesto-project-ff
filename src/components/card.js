@@ -62,9 +62,3 @@ function likeCard(likeAdd, likeRemove, cardData, userId) {
     return likeAdd(cardData._id);
   }
 }
-
-
-// не особо рабочий варик, функция удаления карточек
-// function removeCard(cardData, deleteCard) {
-//   return deleteCard(cardData._id);
-// }

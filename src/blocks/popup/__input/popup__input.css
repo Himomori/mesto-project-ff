@@ -14,9 +14,9 @@
   margin-bottom: 0;
 }
 
-.popup__input:invalid {
+/* .popup__input:invalid {
   border-bottom: 1px solid red;
-}
+} */
 
 .popup__error_visible {
   color: red;
