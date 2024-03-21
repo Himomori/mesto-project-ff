@@ -44,7 +44,7 @@ const buttonTypeNewCard = document.querySelector(
   ".popup__button_type_new-card"
 );
 
-let userId = '';
+let userId = "";
 
 // функция открытия модального окна картинки карточки
 export function openImagePopup(cardData) {
@@ -119,7 +119,6 @@ export function handleNewCardFormSubmit(evt) {
 }
 
 formNewPlace.addEventListener("submit", handleNewCardFormSubmit);
-
 
 // Редактирование аватара
 function handleFormSubmitAvatar(evt) {

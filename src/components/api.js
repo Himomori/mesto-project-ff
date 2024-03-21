@@ -8,7 +8,7 @@ const config = {
 
 function getResponseData(res) {
   if (!res.ok) {
-      return Promise.reject(`Ошибка: ${res.status}`); 
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
   return res.json();
 }
@@ -27,14 +27,14 @@ export const getCardsData = fetch(`${config.baseUrl}/cards`, {
 
 // Редактирование профиля
 export function editProfile() {
-return fetch(`${config.baseUrl}/users/me`, {
-  method: "PATCH",
-  headers: config.headers,
-  body: JSON.stringify({
-    name: "Nataxa",
-    about: "Protivopixotnaya mina",
-  }),
-}).then(getResponseData);
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      name: "Nataxa",
+      about: "Protivopixotnaya mina",
+    }),
+  }).then(getResponseData);
 }
 
 // Добавление новой карточки
@@ -53,8 +53,8 @@ export const deleteCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then(getResponseData)
-}
+  }).then(getResponseData);
+};
 
 export const likeAdd = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
@@ -68,7 +68,6 @@ export const likeRemove = (cardId) => {
     method: "DELETE",
     headers: config.headers,
   }).then(getResponseData);
-
 };
 
 export function editAvatar(url) {

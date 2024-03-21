@@ -16,19 +16,17 @@ export function createCard(
   const likeCounter = cardElement.querySelector(".like__counter");
   likeCounter.textContent = cardData.likes.length;
 
-  console.log(userId);
-
   const deleteButton = cardElement.querySelector(".card__delete-button");
   if (userId === cardData.owner._id) {
     deleteButton.addEventListener("click", function (evt) {
       deleteCard(cardData._id)
-      .then(() => {
-        cardElement.closest(".card").remove();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    })  
+        .then(() => {
+          cardElement.closest(".card").remove();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   } else {
     deleteButton.remove();
   }
@@ -40,7 +38,7 @@ export function createCard(
 
   const likeButton = cardElement.querySelector(".card__like-button");
   likeButton.addEventListener("click", function (evt) {
-    likeCard( likeAdd, likeRemove, cardData, userId)
+    likeCard(likeAdd, likeRemove, cardData, userId)
       .then((newCardData) => {
         likeCounter.textContent = newCardData.likes.length;
         evt.target.classList.toggle("card__like-button_is-active");
