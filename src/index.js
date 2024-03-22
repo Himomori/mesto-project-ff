@@ -5,7 +5,7 @@ import {
   closeModal,
   handleCloseModalByClick,
 } from "./components/modal.js";
-import { hideInputError, showInputError } from "./components/validation.js";
+import { enableValidation } from "./components/validation.js";
 import {
   getUserData,
   getCardsData,
@@ -59,6 +59,18 @@ popups.forEach(function (popup) {
     handleCloseModalByClick(evt);
   });
 });
+
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button-inactive',
+  inputErrorClass: 'popup__input-error',
+  errorClass: 'popup__input-error_active'
+}; 
+
+enableValidation(validationConfig);
+console.log(validationConfig);
 
 // загрузка информации о пользователе и карточек с сервера и их вывод
 Promise.all([getUserData, getCardsData]).then(([userData, cardsData]) => {

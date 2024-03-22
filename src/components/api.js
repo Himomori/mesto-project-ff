@@ -26,13 +26,13 @@ export const getCardsData = fetch(`${config.baseUrl}/cards`, {
 }).then(getResponseData);
 
 // Редактирование профиля
-export function editProfile() {
+export function editProfile(name, about) {
   return fetch(`${config.baseUrl}/users/me`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
-      name: "Nataxa",
-      about: "Protivopixotnaya mina",
+      name: name,
+      about: about,
     }),
   }).then(getResponseData);
 }
