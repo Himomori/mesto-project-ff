@@ -23,7 +23,6 @@ export function handleCloseModalByClick(modal) {
     modal.currentTarget === modal.target ||
     modal.target.classList.contains("popup__close")
   ) {
-    const openPop = document.querySelector(".popup_is-opened");
-    closeModal(openPop);
+    closeModal(modal.currentTarget);
   }
 }
