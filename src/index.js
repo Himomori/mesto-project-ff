@@ -70,7 +70,6 @@ const validationConfig = {
 }; 
 
 enableValidation(validationConfig);
-console.log(validationConfig);
 
 // загрузка информации о пользователе и карточек с сервера и их вывод
 Promise.all([getUserData, getCardsData]).then(([userData, cardsData]) => {
@@ -166,4 +165,5 @@ profileAddButton.addEventListener("click", function () {
 // cобытие открытия формы смены аватара
 profileImage.addEventListener("click", function () {
   openModal(popupNewAvatar);
+  formAvatar.reset();
 });

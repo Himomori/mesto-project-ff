@@ -31,7 +31,6 @@ export function checkInputValidity(formElement, inputElement, validationConfig) 
 export function setEventListeners(formElement, validationConfig) {
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
   const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
-  console.log(inputList);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
       checkInputValidity(formElement, inputElement, validationConfig);
@@ -42,7 +41,6 @@ export function setEventListeners(formElement, validationConfig) {
 
 // Функция, которая добавляет обработчики всем формам
 export function enableValidation(validationConfig) {
-  console.log(validationConfig);
   const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
   formList.forEach((formElement) => {
     setEventListeners(formElement, validationConfig);
