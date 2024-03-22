@@ -5,7 +5,7 @@ import {
   closeModal,
   handleCloseModalByClick,
 } from "./components/modal.js";
-import { enableValidation } from "./components/validation.js";
+import { enableValidation, clearValidation } from "./components/validation.js";
 import {
   getUserData,
   getCardsData,
@@ -155,7 +155,7 @@ formAvatar.addEventListener("submit", handleFormSubmitAvatar);
 profileEditButton.addEventListener("click", function () {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
-  // clearValidation(formEditProfile, validationConfig);
+  clearValidation(formEditProfile, validationConfig);
   openModal(popupTypeEdit);
 });
 // событие открытия формы добавления карточки
