@@ -120,8 +120,10 @@ export function handleNewCardFormSubmit(evt) {
         likeAdd,
         userId
       );
-      nameInput.value = "";
+      cardName.value = "";
       cardUrl.value = "";
+      buttonTypeNewCard.disabled = true;
+      buttonTypeNewCard.classList.add(validationConfig.inactiveButtonClass);
       cardsContainer.prepend(newCardElement);
     })
     .finally(() => {
@@ -141,6 +143,8 @@ function handleFormSubmitAvatar(evt) {
     .then((data) => {
       profileImage.style.backgroundImage = `url(${data.avatar})`;
       closeModal(popupNewAvatar);
+      buttonTypeAvatar.disabled = true;
+      buttonTypeAvatar.classList.add(validationConfig.inactiveButtonClass);
     })
     .catch((err) => {
       console.error(err);

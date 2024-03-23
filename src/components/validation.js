@@ -27,10 +27,22 @@ export function checkInputValidity(formElement, inputElement, validationConfig) 
   }
 }
 
+// Функция, которая блокирует кнопку
+export function toggleButtonState(inputList, buttonElement, validationConfig) {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.disabled = true;
+    buttonElement.classList.add(validationConfig.inactiveButtonClass);
+  } else {
+    buttonElement.disabled = false;
+    buttonElement.classList.remove(validationConfig.inactiveButtonClass);
+  }
+}
+
 // Функция, которая добавляет слушатель всем полям формы
 export function setEventListeners(formElement, validationConfig) {
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
   const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
+  // toggleButtonState(inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
       checkInputValidity(formElement, inputElement, validationConfig);
@@ -52,17 +64,6 @@ export function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
-}
-
-// Функция, которая блокирует кнопку
-export function toggleButtonState(inputList, buttonElement, validationConfig) {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.disabled = true;
-    buttonElement.classList.add(validationConfig.inactiveButtonClass);
-  } else {
-    buttonElement.disabled = false;
-    buttonElement.classList.remove(validationConfig.inactiveButtonClass);
-  }
 }
 
 export function clearValidation (formElement, validationConfig) {
