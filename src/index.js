@@ -92,13 +92,13 @@ function profileFormSubmit(evt) {
     .then((element) => {
       profileTitle.textContent = element.name;
       profileDescription.textContent = element.about;
+      closeModal(popupTypeEdit);
     })
     .catch((err) => {
       console.error(err);
     })
     .finally(() => {
       buttonTypeEdit.textContent = "Сохранить";
-      closeModal(popupTypeEdit);
     });
 }
 formEditProfile.addEventListener("submit", profileFormSubmit);
@@ -111,6 +111,7 @@ export function handleNewCardFormSubmit(evt) {
   const link = cardUrl.value;
   createNewCard(name, link)
     .then((newCardData) => {
+      closeModal(popupTypeNewCard);
       const newCardElement = createCard(
         newCardData,
         deleteCard,
@@ -125,7 +126,6 @@ export function handleNewCardFormSubmit(evt) {
     })
     .finally(() => {
       buttonTypeNewCard.textContent = "Сохранить";
-      closeModal(popupTypeNewCard);
     });
 }
 
@@ -140,13 +140,13 @@ function handleFormSubmitAvatar(evt) {
   editAvatar(avatarUrl)
     .then((data) => {
       profileImage.style.backgroundImage = `url(${data.avatar})`;
+      closeModal(popupNewAvatar);
     })
     .catch((err) => {
       console.error(err);
     })
     .finally(() => {
       buttonTypeAvatar.textContent = "Сохранить";
-      closeModal(popupNewAvatar);
     });
 }
 formAvatar.addEventListener("submit", handleFormSubmitAvatar);
